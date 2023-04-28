@@ -6,6 +6,8 @@ import CategoryForm from "../pages/Admin/CategoryForm/CategoryForm";
 import Category from "../pages/Home/Category/Category";
 import NewsLayout from "../Layout/NewsLayout";
 import News from "../pages/News/News";
+import fetchNewsByCategory from "../utility/fetchNewsByCategory";
+import fetchNewsById from "../utility/fetchNewsById";
 
 const routes = createBrowserRouter([
   {
@@ -19,6 +21,7 @@ const routes = createBrowserRouter([
       {
         path: "category/:id",
         element: <Category />,
+        loader: fetchNewsByCategory,
       },
     ],
   },
@@ -29,6 +32,7 @@ const routes = createBrowserRouter([
       {
         path: ":id",
         element: <News />,
+        loader: fetchNewsById,
       },
     ],
   },

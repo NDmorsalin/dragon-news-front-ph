@@ -1,28 +1,27 @@
 import { useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLoaderData, useLocation, useNavigation } from "react-router-dom";
+import NewsCard from "../NewsCard/NewsCard";
+import Loader from "../../../Shared/Loader/Loader";
 
 const Category = () => {
-  const { id } = useParams();
+  const newsByCategory = useLoaderData();
   const { state } = useLocation();
-  console.log(id, state);
+
+  const navigation = useNavigation();
 
   useEffect(() => {
-    document.title = state.name;
-  }, [state.name]);
+    document.title = state?.name;
+  }, [state?.name]);
 
-  // fetch news by category id
-  useEffect(() => {
-    const fetchNewsByCategory = async () => {
-      const response = await fetch(`http://localhost:3000/api/category/${id}`);
-      const data = await response.json();
-      console.log(data);
-    };
-    fetchNewsByCategory();
-  }, [id]);
-
-  return <div>
-    
-  </div>;
+  return navigation.state === "loading" ? (
+    <Loader />
+  ) : (
+    <div>
+      {newsByCategory.map((news) => (
+        <NewsCard news={news} key={news._id} />
+      ))}
+    </div>
+  );
 };
 
 export default Category;

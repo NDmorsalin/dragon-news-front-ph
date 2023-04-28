@@ -1,5 +1,6 @@
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { FaRegUserCircle } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   return (
@@ -8,15 +9,15 @@ const NavBar = () => {
         <Container>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="mx-auto">
-              <Nav.Link href="#features">Home</Nav.Link>
-              <Nav.Link href="#pricing">About</Nav.Link>
-              <Nav.Link href="#pricing">Career</Nav.Link>
+            <Nav className="mx-auto d-flex align-items-center gap-3">
+              <Link to="#features">Home</Link>
+              <Link to="#pricing">About</Link>
+              <Link to="#pricing">Career</Link>
             </Nav>
             <Nav>
-              <Nav.Link href="#deets" className="fs-4">
+              <Link to="#deets" className="fs-4 d-block me-2">
                 <FaRegUserCircle />
-              </Nav.Link>
+              </Link>
               <Button variant="dark" className="rounded-0 px-4">
                 Login
               </Button>
