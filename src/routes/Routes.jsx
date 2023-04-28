@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { Navigate, createBrowserRouter } from "react-router-dom";
 import Layout from "../Layout/Layout";
 import Home from "../pages/Home/Home/Home";
 import Admin from "../pages/Admin/Admin";
@@ -8,18 +8,35 @@ import NewsLayout from "../Layout/NewsLayout";
 import News from "../pages/News/News";
 import fetchNewsByCategory from "../utility/fetchNewsByCategory";
 import fetchNewsById from "../utility/fetchNewsById";
+import AuthLayout from "../Layout/AuthLayout";
+import Login from "../pages/Auth/Login/Login";
+import Register from "../pages/Auth/Register/Register";
 
 const routes = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: <AuthLayout />,
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: <Navigate to="category/all" />,
       },
       {
-        path: "category/:id",
+        path: "/auth/login",
+        element: <Login />,
+      },
+      {
+        path: "/auth/register",
+        element: <Register />,
+      },
+    ],
+  },
+  {
+    path: "/category",
+    element: <Layout />,
+    children: [
+      {
+        path: ":id",
         element: <Category />,
         loader: fetchNewsByCategory,
       },
