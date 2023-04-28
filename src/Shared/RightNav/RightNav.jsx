@@ -11,23 +11,46 @@ import bg from "../../assets/bg.png";
 import { useAuth } from "../../Provider/AuthProvider/AuthProvider";
 
 const RightNav = () => {
-  const { loginWithGithub, user } = useAuth();
+  const { loginWithGithub, user, loginWithGoogle } = useAuth();
+
+  // login with github
   const handleLoginWithGithub = async () => {
     try {
+      // eslint-disable-next-line no-unused-vars
       const user = await loginWithGithub();
-      console.log(user);
+      // console.log(user);
     } catch (error) {
       console.log(error);
     }
   };
+
+  // login with google
+  const handleLoginWithGoogle = async () => {
+    try {
+      // eslint-disable-next-line no-unused-vars
+      const user = await loginWithGoogle();
+      // console.log(user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="">
       <h4 className="">Login with</h4>
       <div className="d-flex flex-column gap-2">
-        <Button variant="outline-primary" disabled={user ? true :false }>
+        <Button
+          onClick={handleLoginWithGoogle}
+          variant="outline-primary"
+          disabled={user ? true : false}
+        >
           <FaGoogle /> Login with Google
         </Button>
-        <Button onClick={handleLoginWithGithub} variant="outline-secondary" disabled={user ? true :false } >
+        <Button
+          onClick={handleLoginWithGithub}
+          variant="outline-secondary"
+          disabled={user ? true : false}
+        >
           <FaGithub /> Login with Github
         </Button>
       </div>

@@ -10,34 +10,42 @@ import fetchNewsById from "../utility/fetchNewsById";
 import AuthLayout from "../Layout/AuthLayout";
 import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Register/Register";
+import ProfileLayout from "../Layout/ProfileLayout";
+import About from "../pages/Home/About/About";
+import MyProfile from "../pages/Profile/Me/MyProfile";
 
 const routes = createBrowserRouter([
   {
-    path: "/",
+    path: "/auth",
     element: <AuthLayout />,
     children: [
       {
-        path: "/",
-        element: <Navigate to="category/all" />,
-      },
-      {
-        path: "/auth/login",
+        path: "login",
         element: <Login />,
       },
       {
-        path: "/auth/register",
+        path: "register",
         element: <Register />,
       },
     ],
   },
   {
-    path: "/category",
+    path: "/",
     element: <Layout />,
     children: [
       {
-        path: ":id",
+        path: "/",
+        element: <Navigate to="category/all" />,
+      },
+
+      {
+        path: "category/:id",
         element: <Category />,
         loader: fetchNewsByCategory,
+      },
+      {
+        path: "about",
+        element: <About />,
       },
     ],
   },
@@ -49,6 +57,16 @@ const routes = createBrowserRouter([
         path: ":id",
         element: <News />,
         loader: fetchNewsById,
+      },
+    ],
+  },
+  {
+    path: "/profile",
+    element: <ProfileLayout />,
+    children: [
+      {
+        path: "me",
+        element: <MyProfile />,
       },
     ],
   },

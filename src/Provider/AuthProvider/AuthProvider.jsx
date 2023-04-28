@@ -1,11 +1,13 @@
 import {
   GithubAuthProvider,
+  GoogleAuthProvider,
   onAuthStateChanged,
   signInWithPopup,
   signOut,
 } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../../firebase/firebase.config";
+import setUserRole from "../../utility/setUserRole";
 
 export const AuthContext = createContext();
 
@@ -16,6 +18,12 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // google provider
+  const googleProvider = new GoogleAuthProvider();
+  const loginWithGoogle = () => {
+    return signInWithPopup(auth, googleProvider);
+  };
 
   // github provider
   const githubProvider = new GithubAuthProvider();
@@ -33,9 +41,21 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(
       auth,
       (user) => {
-        setUser(user);
-        setLoading(false);
-        setError(null);
+        if (user) {
+          const setRole = async () => {
+            const role = await setUserRole(user.uid);
+            user.role = role;
+            setUser(user);
+            setLoading(false);
+            setError(null);
+          };
+          // console.log(userRole)
+          setRole();
+        } else {
+          setUser(null);
+          setLoading(false);
+          setError(null);
+        }
       },
       (error) => {
         setUser(null);
@@ -52,6 +72,7 @@ const AuthProvider = ({ children }) => {
     loading,
     error,
     loginWithGithub,
+    loginWithGoogle,
     logout,
   };
 

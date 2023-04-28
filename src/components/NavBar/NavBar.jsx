@@ -5,7 +5,7 @@ import { useAuth } from "../../Provider/AuthProvider/AuthProvider";
 
 const NavBar = () => {
   const { logout, user } = useAuth();
-  // console.log(user.photoURL);
+  // console.log(user?.photoURL);
   return (
     <>
       <Navbar
@@ -35,7 +35,7 @@ const NavBar = () => {
                     isActive ? "text-primary" : "text-secondary"
                   }`
                 }
-                to="/profile/about"
+                to="/about"
               >
                 About
               </NavLink>
@@ -45,10 +45,22 @@ const NavBar = () => {
                     isActive ? "text-primary" : "text-secondary"
                   }`
                 }
-                to="/profile/career"
+                to="/career"
               >
                 Career
               </NavLink>
+              {user?.role?.role !== "user" ? (
+                <NavLink
+                  className={({ isActive }) =>
+                    `text-decoration-none fw-bold ${
+                      isActive ? "text-primary" : "text-secondary"
+                    }`
+                  }
+                  to="/admin"
+                >
+                  {user?.role?.role}
+                </NavLink>
+              ) : null}
             </Nav>
             <Nav>
               {user ? (
@@ -67,11 +79,7 @@ const NavBar = () => {
               ) : null}
 
               {user ? (
-                <Button
-                  onClick={logout}
-                  variant="danger"
-                  className="btn  px-4"
-                >
+                <Button onClick={logout} variant="danger" className="btn  px-4">
                   Logout
                 </Button>
               ) : (
