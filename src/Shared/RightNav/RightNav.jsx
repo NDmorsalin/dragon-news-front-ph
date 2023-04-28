@@ -8,16 +8,26 @@ import {
 } from "react-icons/fa";
 import Qzone from "../Qzone/Qzone";
 import bg from "../../assets/bg.png";
+import { useAuth } from "../../Provider/AuthProvider/AuthProvider";
 
 const RightNav = () => {
+  const { loginWithGithub, user } = useAuth();
+  const handleLoginWithGithub = async () => {
+    try {
+      const user = await loginWithGithub();
+      console.log(user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="">
       <h4 className="">Login with</h4>
       <div className="d-flex flex-column gap-2">
-        <Button variant="outline-primary">
+        <Button variant="outline-primary" disabled={user ? true :false }>
           <FaGoogle /> Login with Google
         </Button>
-        <Button variant="outline-secondary">
+        <Button onClick={handleLoginWithGithub} variant="outline-secondary" disabled={user ? true :false } >
           <FaGithub /> Login with Github
         </Button>
       </div>
@@ -50,7 +60,7 @@ const RightNav = () => {
           import demo and much more.
         </p>
         <Button variant="danger" className="rounded-0 px-4 py-3 fs-4">
-        Learn More
+          Learn More
         </Button>
       </div>
     </div>

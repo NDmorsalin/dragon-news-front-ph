@@ -1,6 +1,5 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import Layout from "../Layout/Layout";
-import Home from "../pages/Home/Home/Home";
 import Admin from "../pages/Admin/Admin";
 import CategoryForm from "../pages/Admin/CategoryForm/CategoryForm";
 import Category from "../pages/Home/Category/Category";

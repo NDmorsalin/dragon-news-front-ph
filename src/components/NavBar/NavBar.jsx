@@ -1,8 +1,11 @@
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { FaRegUserCircle } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
+import { useAuth } from "../../Provider/AuthProvider/AuthProvider";
 
 const NavBar = () => {
+  const { logout, user } = useAuth();
+  // console.log(user.photoURL);
   return (
     <>
       <Navbar
@@ -48,12 +51,34 @@ const NavBar = () => {
               </NavLink>
             </Nav>
             <Nav>
-              <Link to="#deets" className="fs-4 d-block me-2">
-                <FaRegUserCircle />
-              </Link>
-              <Link to="/auth/login" className="btn btn-dark px-4">
-                Login
-              </Link>
+              {user ? (
+                <Link to="/profile/me" className="fs-4 d-block me-2">
+                  {user.photoURL ? (
+                    <img
+                      src={user.photoURL}
+                      alt=""
+                      className="rounded-circle"
+                      style={{ width: "40px", height: "40px" }}
+                    />
+                  ) : (
+                    <FaRegUserCircle />
+                  )}
+                </Link>
+              ) : null}
+
+              {user ? (
+                <Button
+                  onClick={logout}
+                  variant="danger"
+                  className="btn  px-4"
+                >
+                  Logout
+                </Button>
+              ) : (
+                <Link to="/auth/login" className="btn btn-dark px-4">
+                  Login
+                </Link>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>
