@@ -1,20 +1,25 @@
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../../Provider/AuthProvider/AuthProvider";
 
 const Login = () => {
+  const { loginWithEmailPassword } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
 
-  console.log(location?.state?.from?.pathname);
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(`Email: ${email} Password: ${password}`);
 
-    // redirect to previous page
-    navigate(location?.state?.from?.pathname || "/");
+    try {
+      await loginWithEmailPassword(email, password);
+      // redirect to previous page
+      navigate(location?.state?.from?.pathname || "/");
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (

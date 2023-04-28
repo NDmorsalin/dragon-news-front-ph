@@ -58,7 +58,7 @@ const NavBar = () => {
                   }
                   to="/admin"
                 >
-                  {user?.role?.role}
+                  <span className="text-capitalize ">{user?.role?.role}</span>
                 </NavLink>
               ) : null}
             </Nav>
@@ -83,9 +83,14 @@ const NavBar = () => {
                   Logout
                 </Button>
               ) : (
-                <Link to="/auth/login" className="btn btn-dark px-4">
-                  Login
-                </Link>
+                <>
+                  <Link to="/auth/login" className="btn btn-dark px-4">
+                    Login
+                  </Link>
+                  <Link to="/auth/register" className="btn btn-dark px-4 ms-2">
+                    Register
+                  </Link>
+                </>
               )}
             </Nav>
           </Navbar.Collapse>
